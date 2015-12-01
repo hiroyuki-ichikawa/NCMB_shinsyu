@@ -60,7 +60,7 @@ server.on('request',function(req,res){
                         data.push({
                             Id      : point.get("objectId"),
                             geo     : point.get("geo"),
-                            name    : point.get("name"),
+                            name    : point.get("name")
                         });
 
                     }

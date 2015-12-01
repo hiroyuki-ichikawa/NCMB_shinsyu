@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>善光寺周辺の検索</title>
+  </head>
+  <!-- 1.SDKの読み込み -->
+  <script type="text/javascript" src="js/ncmb.min.js" charset="utf-8"></script>
+  <body>
+    <script>
+      // mobile backendアプリとの連携
+      var ncmb = new NCMB("アプリケーションキー","クライアントキー");
+
+
+      /**************************************/
+      // 適宜テーブル名は変更数
+      /**************************************/
+      var SpotClass = ncmb.DataStore("sample");
+      var lat = 36.6617052;      // 善光寺の代表ポイント
+      var lng = 138.1855176;     // 
+      var geoPoint = new ncmb.GeoPoint(lat,lng);
+
+      // 半径10km以内のクエリー
+      SpotClass.withinKilometers("geo", geoPoint, 10)
+         .fetchAll()
+         .then(function(results){
+            var data = [];
+            for (var i = 0; i < results.length; i++) {
+              var result = results[i];
+              // 結果は連想配列へ登録              
+              data.push( {
+                    Id      : result.get("objectId"),
+                    geo     : result.get("geo"),
+                    name    : result.get("name")
+                }
+              );
+            }
+
+            // デバッグ用にコンソールログ出力
+            console.log( data.length );
+            console.log( data );
+          })
+         .catch(function(err){
+            // エラー処理
+          });
+
+    </script>
+  </body>
+</html>
